@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: dobroe-serdtse-api
+    runtime: node
+    rootDir: .
+    buildCommand: npm install
+    preDeployCommand: npm run seed
+    startCommand: npm start
+    healthCheckPath: /api/health
+    disk:
+      name: dobroe-serdtse-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_FILE
+        value: /var/data/data.sqlite
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+      - key: BACKUP_DIR
+        value: /var/data/backups
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
